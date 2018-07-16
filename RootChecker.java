@@ -80,8 +80,9 @@ public class RootChecker {
                     "/system/bin/.ext/.su"
             };
             for (String path : paths) {
-                if (new File(path).exists())
+                if (new File(path).exists()) {
                     return true;
+                }
             }
             return false;
         } catch (Exception e) {
