@@ -99,11 +99,9 @@ class RootChecker (context:Context) {
      */
     private fun checkRootMethod4(context:Context):Boolean {
         val packageManager = context.packageManager
-        for (s in this.RootedAPKs)
-        {
+        for (s in this.RootedAPKs) {
             val intent = packageManager.getLaunchIntentForPackage(s)
-            if (intent != null)
-            {
+            if (intent != null) {
                 val list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
                 return list.size > 0
             }
