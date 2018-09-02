@@ -29,7 +29,9 @@ public class RootChecker {
             "com.thirdparty.superuser",
             "eu.chainfire.supersu",
             "com.koushikdutta.superuser",
-            "com.devadvance.rootcloak2"
+            "com.devadvance.rootcloak2", 
+			"com.zachspong.temprootremovejb",
+			"com.ramdroid.appquarantine"
     };
 
     /**
