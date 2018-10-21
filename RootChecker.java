@@ -3,11 +3,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
-
-// This will change based on where you set the ExecShell class
-import ExecShell;
 
 /**
  * Created by Ahmed Moussa on 7/15/18.
@@ -29,9 +29,9 @@ public class RootChecker {
             "com.thirdparty.superuser",
             "eu.chainfire.supersu",
             "com.koushikdutta.superuser",
-            "com.devadvance.rootcloak2", 
-			"com.zachspong.temprootremovejb",
-			"com.ramdroid.appquarantine"
+            "com.devadvance.rootcloak2",
+            "com.zachspong.temprootremovejb",
+            "com.ramdroid.appquarantine"
     };
 
     /**
@@ -118,4 +118,49 @@ public class RootChecker {
         return false;
     }
 
+
+    /**
+     * Created by Ahmed Moussa on 7/15/18.
+     * This class represent my interface with the shell commands
+     */
+    private static class ExecShell {
+
+        /**
+         * list of shell commands that I will be suing
+         */
+        public enum SHELL_CMD {
+            check_su_binary(new String[] { "/system/xbin/which", "su" });
+            String[] command;
+            SHELL_CMD(String[] command) {
+                this.command = command;
+            }
+        }
+
+        /**
+         * Run a shell command
+         * @param shellCmd Shell command that will be executed
+         * @return result of the given shell command
+         */
+        public ArrayList<String> executeCommand(SHELL_CMD shellCmd) {
+            String line = null;
+            ArrayList<String> fullResponse = new ArrayList<String>();
+            Process localProcess = null;
+            try {
+                localProcess = Runtime.getRuntime().exec(shellCmd.command);
+            } catch (Exception e) {
+                return null;
+            }
+            BufferedReader in = new BufferedReader(new InputStreamReader(localProcess.getInputStream()));
+            try {
+                while ((line = in.readLine()) != null) {
+                    fullResponse.add(line);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return fullResponse;
+        }
+
+    }
+    
 }
